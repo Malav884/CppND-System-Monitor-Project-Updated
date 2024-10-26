@@ -86,8 +86,19 @@ float Process::CpuUtilization() const{
 string Process::Command() { 
     std::ifstream file("/proc" + std::to_string(pid_) + "/cmdline");
     std::string cmdline;
-    std::getline(file,cmdline, '\0');
-    
+    if(file.is_open())
+    {
+         std::getline(file,cmdline, '\0');
+         if(cmdline.empty())
+            {
+                cmdline = "N/A";
+            }
+    }else
+    {
+        cmdline = "N/A";
+    }
+
+
     return cmdline; }
 
 // TODO: Return this process's memory utilization
